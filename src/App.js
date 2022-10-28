@@ -1,19 +1,15 @@
-// routes
-import Router from './routes';
-// theme
-import ThemeProvider from './theme';
-// components
-import ScrollToTop from './components/ScrollToTop';
-import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
+import React from 'react'
+import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
+import Home from './home/Home';
 
-// ----------------------------------------------------------------------
 
-export default function App() {
-  return (
-    <ThemeProvider>
-      <ScrollToTop />
-      <BaseOptionChartStyle />
-      <Router />
-    </ThemeProvider>
-  );
-}
+const App = () => {
+      <>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+          </Routes>
+        </Router>
+      </>
+  }
+export default App
