@@ -10,6 +10,7 @@ import {
 import HeroImg from '../../images/image-mockups.png';
 
 const Hero = () => {
+	return (
 	<div>
 		<NoRightPaddingContainer>
 			<HeroWrapper>
@@ -27,6 +28,7 @@ const Hero = () => {
 			</HeroWrapper>
 		</NoRightPaddingContainer>
 	</div>
+	);
 };
 
 export default Hero;

@@ -9,6 +9,7 @@ import iconPinterest from '../../images/icon-pinterest.svg';
 import { Button, Container } from '../../styles/Common.style';
 
 const Footer = () => {
+	return (
 	<div>
 		<FooterWrapper>
 			<Container>
@@ -41,6 +42,7 @@ const Footer = () => {
 			</Container>
 		</FooterWrapper>
 	</div>
+	);
 };
 
 export default Footer;

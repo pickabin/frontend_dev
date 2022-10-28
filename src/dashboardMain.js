@@ -1,5 +1,5 @@
-// routes
-import Router from './routes';
+// // routes
+// import Router from './routes';
 // theme
 import ThemeProvider from './theme';
 
@@ -14,7 +14,7 @@ export default function DashboardMain() {
     <ThemeProvider>
       <ScrollToTop />
       <BaseOptionChartStyle />
-      <Router />
+      {/* <Router /> */}
     </ThemeProvider>
   );
 }

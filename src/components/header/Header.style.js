@@ -13,7 +13,7 @@ export const Navigation = styled.header`
 export const Nav = styled.nav`
 	padding: 3rem 0;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	.hamburger {
 		max-width: 3rem;
 		display: none;

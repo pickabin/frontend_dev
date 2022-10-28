@@ -8,6 +8,7 @@ import Onboarding from '../../images/fitur3.png';
 import Maps from '../../images/fitur4.png';
 
 const Info = () => {
+	return (
 	<div>
 		<InfoWrapper>
 			<Container>
@@ -55,6 +56,7 @@ const Info = () => {
 			</Container>
 		</InfoWrapper>
 	</div>
+	);
 };
 
 export default Info;

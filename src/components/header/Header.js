@@ -12,8 +12,8 @@ const Header = () => {
 	const handleClick = () => {
 		setOpen(!open);
 	};
+	return (
 	<div>
-		<Container>
 			<Navigation>
 				<Nav>
 					<Logo>
@@ -32,13 +32,16 @@ const Header = () => {
 						<Li>
 							<Link to={`#`}>Contact</Link>
 						</Li>
+						
 					</Ul>
-					<Button>Get The App Now</Button>
+					<Button>
+							<Link to='/login'>Login</Link>
+					</Button>
 				
 				</Nav>
 			</Navigation>
-		</Container>
 	</div>
+	);
 };
 
 export default Header;
