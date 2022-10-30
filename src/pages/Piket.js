@@ -29,10 +29,10 @@ import USERLIST from '../_mock/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'nama', label: 'Nama', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'alamat', label: 'Alamat', alignRight: false },
-  { id: 'notelp', label: 'No Telp', alignRight: false },
+  { id: 'hari', label: 'hari', alignRight: false },
+  { id: 'tanggal', label: 'tanggal', alignRight: false },
+  { id: 'waktu', label: 'waktu', alignRight: false },
+  { id: 'foto', label: 'Piket', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -61,7 +61,7 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.nama.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.hari.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -73,9 +73,9 @@ export default function User() {
 
   const [selected, setSelected] = useState([]);
 
-  const [orderBy, setOrderBy] = useState('nama');
+  const [orderBy, setOrderBy] = useState('hari');
 
-  const [filterNama, setFilterNama] = useState('');
+  const [filterhari, setFilterhari] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -87,18 +87,18 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.nama);
+      const newSelecteds = USERLIST.map((n) => n.hari);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, nama) => {
-    const selectedIndex = selected.indexOf(nama);
+  const handleClick = (event, hari) => {
+    const selectedIndex = selected.indexOf(hari);
     let newSelected = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, nama);
+      newSelected = newSelected.concat(selected, hari);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -118,13 +118,13 @@ export default function User() {
     setPage(0);
   };
 
-  const handleFilterByNama = (event) => {
-    setFilterNama(event.target.value);
+  const handleFilterByhari = (event) => {
+    setFilterhari(event.target.value);
   };
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterNama);
+  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterhari);
 
   const isUserNotFound = filteredUsers.length === 0;
 
@@ -133,15 +133,14 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Petugas
+            <Button href="monitor" variant="contained">
+              Back Monitor
+            </Button>
           </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterNama={filterNama} onFilterNama={handleFilterByNama} />
+          <UserListToolbar numSelected={selected.length} filterhari={filterhari} onFilterhari={handleFilterByhari} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -157,32 +156,32 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, nama, alamat, email, avatarUrl, notelp } = row;
-                    const isItemSelected = selected.indexOf(nama) !== -1;
+                    const { id, hari, waktu, tanggal, avatarUrl, foto } = row;
+                    const isItemSelected = selected.indexOf(hari) !== -1;
 
                     return (
                       <TableRow
                         hover
                         key={id}
                         tabIndex={-1}
-                        alamat="checkbox"
+                        waktu="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
                         <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, nama)} />
+                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, hari)} />
                         </TableCell>
                         <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={nama} src={avatarUrl} />
-                            <Typography variant="subtitle2" noWrap>
-                              {nama}
-                            </Typography>
-                          </Stack>
+                          {hari}
                         </TableCell>
-                        <TableCell align="left">{email}</TableCell>
-                        <TableCell align="left">{alamat}</TableCell>
-                        <TableCell align="left">{notelp ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{tanggal}</TableCell>
+                        <TableCell align="left">{waktu}</TableCell>
+                        <TableCell align="left">
+                        <Button href="foto">
+                          Check Foto
+                          <Iconify icon="eva:image-2-fill" />
+                        </Button>
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -197,7 +196,7 @@ export default function User() {
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterNama} />
+                        <SearchNotFound searchQuery={filterhari} />
                       </TableCell>
                     </TableRow>
                   </TableBody>

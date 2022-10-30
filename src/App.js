@@ -6,11 +6,12 @@ import GlobalStyle from './styles/GlobalStyle';
 import ThemeProvider from './theme';
 // import Routing from './routes';
 
-import Blog from './pages/Blog';
+import Blog from './pages/Aspirasi';
 import User from './pages/User';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Products from './pages/Products';
+import Monitor from './pages/Monitor';
+import Piket from './pages/Piket';
 import DashboardApp from './pages/DashboardApp';
 
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
@@ -33,7 +34,8 @@ const App = () => {
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route path="app" element={<DashboardApp />} />
               <Route path="user" element={<User />} />
-              <Route path="products" element={<Products />} />
+              <Route path="monitor" element={<Monitor />} />
+              <Route path="piket" element={<Piket />} />
               <Route path="blog" element={<Blog />} />
             </Route>
            

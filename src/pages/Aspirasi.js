@@ -30,9 +30,9 @@ import USERLIST from '../_mock/user';
 
 const TABLE_HEAD = [
   { id: 'nama', label: 'Nama', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'alamat', label: 'Alamat', alignRight: false },
-  { id: 'notelp', label: 'No Telp', alignRight: false },
+  { id: 'gedung', label: 'Gedung', alignRight: false },
+  { id: 'tanggal', label: 'Tanggal', alignRight: false },
+  { id: 'isi', label: 'Isi', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -133,11 +133,8 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Petugas
+            Aspirasi Petugas
           </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
         </Stack>
 
         <Card>
@@ -157,7 +154,7 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, nama, alamat, email, avatarUrl, notelp } = row;
+                    const { id, nama, tanggal, gedung, avatarUrl, isi } = row;
                     const isItemSelected = selected.indexOf(nama) !== -1;
 
                     return (
@@ -165,7 +162,7 @@ export default function User() {
                         hover
                         key={id}
                         tabIndex={-1}
-                        alamat="checkbox"
+                        tanggal="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
@@ -180,9 +177,11 @@ export default function User() {
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{email}</TableCell>
-                        <TableCell align="left">{alamat}</TableCell>
-                        <TableCell align="left">{notelp ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{gedung}</TableCell>
+                        <TableCell align="left">{tanggal}</TableCell>
+                        <TableCell align="left">
+                          {isi}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
