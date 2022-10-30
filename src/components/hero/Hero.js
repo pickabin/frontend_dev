@@ -9,7 +9,7 @@ import {
 } from './Hero.style';
 import HeroImg from '../../images/image-mockups.png';
 
-const Hero = () => {
+function Hero() {
 	return (
 	<div>
 		<NoRightPaddingContainer>

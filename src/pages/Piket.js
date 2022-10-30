@@ -1,12 +1,11 @@
 import { filter } from 'lodash';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation,useNavigate } from 'react-router-dom';
 // material
 import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -17,12 +16,16 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+
+import axios from 'axios';
+import {API_AKTIVITASPETUGAS}  from '../api/api';
+
 // components
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 
@@ -66,7 +69,28 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function Piket() {
+  const location = useLocation();
+  console.log("location", location.state);
+  const history = useNavigate();
+
+  useEffect(() => {
+    if(location.state == null){
+      history('/dashboard/monitor');
+    }else{
+        axios.get(API_AKTIVITASPETUGAS+location.state.userid)
+      .then(response => {
+        const aktivitas = response.data;
+        setAktivitas(aktivitas.data);
+        console.log("data Aktivitas", aktivitas);
+    })
+    }
+    
+  }, [location.state, history]);
+
+
+  const [aktivitas, setAktivitas] = useState([]);
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -79,6 +103,20 @@ export default function User() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  
+  
+  const AKTIVITASLIST = aktivitas.map((aktivitas) => {
+    return {
+      id: aktivitas.id,
+      hari: new Date(aktivitas.date).toLocaleDateString('id-ID', { weekday: 'long' }),
+      tanggal: new Date(aktivitas.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }),
+      waktu: new Date(aktivitas.date).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+      img: aktivitas.jadwal.user.photo,
+      photo: aktivitas.photo
+    };
+  });
+
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -87,7 +125,7 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.hari);
+      const newSelecteds = AKTIVITASLIST.map((n) => n.hari);
       setSelected(newSelecteds);
       return;
     }
@@ -122,13 +160,15 @@ export default function User() {
     setFilterhari(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - AKTIVITASLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterhari);
+  const filteredUsers = applySortFilter(AKTIVITASLIST, getComparator(order, orderBy), filterhari);
 
   const isUserNotFound = filteredUsers.length === 0;
 
-  return (
+  return !location.state ?(
+    <h1>Forbidden</h1>
+   ): (
     <Page title="Profile Petugas">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -156,7 +196,7 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, hari, waktu, tanggal, avatarUrl, foto } = row;
+                    const { id, hari, waktu, tanggal, img, photo } = row;
                     const isItemSelected = selected.indexOf(hari) !== -1;
 
                     return (
@@ -177,10 +217,10 @@ export default function User() {
                         <TableCell align="left">{tanggal}</TableCell>
                         <TableCell align="left">{waktu}</TableCell>
                         <TableCell align="left">
-                        <Button href="foto">
-                          Check Foto
-                          <Iconify icon="eva:image-2-fill" />
-                        </Button>
+                          <Button href={photo}>
+                            Check Foto
+                            <Iconify icon="eva:image-2-fill" />
+                          </Button>
                         </TableCell>
                       </TableRow>
                     );

@@ -1,13 +1,12 @@
 import { filter } from 'lodash';
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+
 // material
 import {
   Card,
   Table,
   Stack,
   Avatar,
-  Button,
   Checkbox,
   TableRow,
   TableBody,
@@ -17,12 +16,15 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+
+import axios from 'axios';
+import { API_PETUGAS, API_ASPIRASI } from '../api/api';
+
 // components
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
-import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 
@@ -30,7 +32,7 @@ import USERLIST from '../_mock/user';
 
 const TABLE_HEAD = [
   { id: 'nama', label: 'Nama', alignRight: false },
-  { id: 'gedung', label: 'Gedung', alignRight: false },
+  { id: 'title', label: 'Title', alignRight: false },
   { id: 'tanggal', label: 'Tanggal', alignRight: false },
   { id: 'isi', label: 'Isi', alignRight: false },
 ];
@@ -66,7 +68,9 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function Aspirasi() {
+  const [aspirasi, setAspirasi] = useState([]);
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -79,6 +83,27 @@ export default function User() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  React.useEffect(() => {
+    axios.get(API_ASPIRASI).then((res) => {
+      const aspirasi = res.data;
+      setAspirasi(aspirasi.data);
+      console.log('aspirasi', aspirasi.data);
+    });
+  }, []);
+
+  const ASPIRASILIST = aspirasi.map((aspirasi) => {
+    return {
+      id: aspirasi.id,
+      nama: aspirasi.user.name,
+      title: aspirasi.title,
+      tanggal: new Intl.DateTimeFormat('id-ID', { year: 'numeric', month: 'long', day: '2-digit' }).format(
+        new Date(aspirasi.created_at)
+      ),
+      photo: aspirasi.user.photo,
+      isi: aspirasi.description,
+    };
+  });
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -87,7 +112,7 @@ export default function User() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.nama);
+      const newSelecteds = ASPIRASILIST.map((n) => n.nama);
       setSelected(newSelecteds);
       return;
     }
@@ -122,14 +147,14 @@ export default function User() {
     setFilterNama(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ASPIRASILIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterNama);
+  const filteredUsers = applySortFilter(ASPIRASILIST, getComparator(order, orderBy), filterNama);
 
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="Profile Petugas">
+    <Page title="Aspirasi Petugas">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -154,7 +179,7 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, nama, tanggal, gedung, avatarUrl, isi } = row;
+                    const { id, nama, tanggal, title, photo, isi } = row;
                     const isItemSelected = selected.indexOf(nama) !== -1;
 
                     return (
@@ -171,17 +196,15 @@ export default function User() {
                         </TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={nama} src={avatarUrl} />
+                            <Avatar alt={nama} src={photo} />
                             <Typography variant="subtitle2" noWrap>
                               {nama}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{gedung}</TableCell>
+                        <TableCell align="left">{title}</TableCell>
                         <TableCell align="left">{tanggal}</TableCell>
-                        <TableCell align="left">
-                          {isi}
-                        </TableCell>
+                        <TableCell align="left">{isi}</TableCell>
                       </TableRow>
                     );
                   })}

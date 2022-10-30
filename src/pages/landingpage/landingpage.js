@@ -4,7 +4,7 @@ import Footer from "../../components/footer/Footer";
 import HomePage from "../home/Homepage";
 
 
-const LandingPage = () => {
+function LandingPage() {
     return (
         <>
         <Header />

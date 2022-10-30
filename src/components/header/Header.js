@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation, Nav, Ul, Li, Logo } from './Header.style';
 import logo from '../../images/logo.png';
-import { Button, Container } from '../../styles/Common.style';
-import hamburger from '../../images/icon-hamburger.svg';
-import close from '../../images/icon-close.svg';
+import { Button} from '../../styles/Common.style';
 
 const Header = () => {
 	const [open, setOpen] = useState(false);

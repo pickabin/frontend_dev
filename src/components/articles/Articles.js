@@ -8,7 +8,7 @@ import BuSiti from '../../images/busiti.jpg';
 
 import { H2, H4, Para } from '../../styles/Typography.style';
 
-const Articles = () => {
+function Articles() {
   return (
     <div>
       <Container>

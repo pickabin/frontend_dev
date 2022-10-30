@@ -23,7 +23,7 @@ const navConfig = [
   },
   {
     title: 'Aspirasi',
-    path: '/dashboard/blog',
+    path: '/dashboard/aspirasi',
     icon: getIcon('eva:file-text-fill'),
   },
 ];

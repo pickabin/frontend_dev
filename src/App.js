@@ -6,7 +6,7 @@ import GlobalStyle from './styles/GlobalStyle';
 import ThemeProvider from './theme';
 // import Routing from './routes';
 
-import Blog from './pages/Aspirasi';
+import Aspirasi from './pages/Aspirasi';
 import User from './pages/User';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -19,7 +19,7 @@ import DashboardLayout from './layouts/dashboard';
 import LandingPage from './pages/landingpage/landingpage';
 
 const helmetContext = {};
-const App = () => {
+function App() {
   return (
     <ThemeProvider>
       <BaseOptionChartStyle />
@@ -35,8 +35,8 @@ const App = () => {
               <Route path="app" element={<DashboardApp />} />
               <Route path="user" element={<User />} />
               <Route path="monitor" element={<Monitor />} />
-              <Route path="piket" element={<Piket />} />
-              <Route path="blog" element={<Blog />} />
+              <Route path="monitor/piket" element={<Piket />} />
+              <Route path="aspirasi" element={<Aspirasi />} />
             </Route>
            
           </Routes>
