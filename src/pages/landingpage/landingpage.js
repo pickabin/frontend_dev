@@ -7,9 +7,9 @@ import HomePage from "../home/Homepage";
 function LandingPage() {
     return (
         <>
-        <Header />
-         <HomePage />
-         <Footer />
+            <Header />
+            <HomePage />
+            <Footer />
         </>
     );
 };

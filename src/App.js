@@ -17,6 +17,7 @@ import DashboardApp from './pages/DashboardApp';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import DashboardLayout from './layouts/dashboard';
 import LandingPage from './pages/landingpage/landingpage';
+import ModalLaporKotor from './pages/landingpage/ModalLaporKotor';
 
 const helmetContext = {};
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route index path="/" element={<LandingPage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="laporKotor" element={<ModalLaporKotor />} />
             {/* children route */}
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route path="app" element={<DashboardApp />} />
@@ -38,7 +40,6 @@ function App() {
               <Route path="monitor/piket" element={<Piket />} />
               <Route path="aspirasi" element={<Aspirasi />} />
             </Route>
-           
           </Routes>
         </Router>
       </HelmetProvider>
