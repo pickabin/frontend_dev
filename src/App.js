@@ -18,8 +18,10 @@ import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import DashboardLayout from './layouts/dashboard';
 import LandingPage from './pages/landingpage/landingpage';
 
+
 const helmetContext = {};
 function App() {
+  
   return (
     <ThemeProvider>
       <BaseOptionChartStyle />

@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Card, Link, Container, Typography } from '@mui/material';
@@ -10,6 +10,8 @@ import Logo from '../components/Logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
 import AuthSocial from '../sections/auth/AuthSocial';
+import AuthUser from '../sections/auth/login/AuthUser';
+import DashboardLayout from '../layouts/dashboard';
 
 // ----------------------------------------------------------------------
 
@@ -57,9 +59,19 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { http,setToken } = AuthUser();
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
+
+  const { getToken } = AuthUser();
+  console.log("token",getToken());
+  if (getToken()) {
+    window.location.href = '/dashboard/app';
+    return <DashboardLayout />
+  }
+  
 
   return (
     <Page title="Login">
