@@ -86,27 +86,21 @@ const Header = () => {
 	  }
 
 	return (
-	<div>
-			<Navigation>
+		<div>
+			<Navigation fullWidth>
 				<Nav>
 					<Logo>
 						<img src={logo} alt='logo' />
 					</Logo>
 					<Ul className={open ? 'active' : 'navlinks'}>
 						<Li>
-							<Link to={'#'}>Features</Link>
-						</Li>
-						<Li>
-							<Link to={'#'}>Testimoni</Link>
-						</Li>
-						<Li>
-							<Link to={'#'}>Contact</Link>
-						</Li>
-						<Li>
 							<Link  onClick={handleClickOpenKotor}>Lapor Kotor</Link>
 						</Li>
 						<Li>
-							<Link  onClick={handleClickOpenAcara}>Acara</Link>
+							<Link  onClick={handleClickOpenAcara}>Lapor Acara</Link>
+						</Li>
+						<Li>
+							<Link >Buku Panduan</Link>
 						</Li>
 					</Ul>
 					<Button>
@@ -179,74 +173,74 @@ const Header = () => {
 
 			{/* // Modal Lapor Acara */}
 			<Dialog open={open2} onClose2={handleCloseAcara}>
-			<DialogTitle>Laporan Ada Acara</DialogTitle>
-			<DialogContent>
-				<DialogContentText>
-					Apabila terdapat kegiatan dan membutuhkan petugas kebersihan maka laporkan acara.
-				</DialogContentText>
-				<FormControl sx={{ mb: 1}} fullWidth>
-						<InputLabel id="demo-simple-select-label">Gedung</InputLabel>
-						<Select
-							labelId="demo-simple-select-label"
-							id="demo-simple-select"
-							value={gedung}
-							label="Gedung"
-							onChange={handleChange}
-						>
-							<MenuItem value={'D3'}>D3</MenuItem>
-							<MenuItem value={'D4'}>D4</MenuItem>
-							<MenuItem value={'PS'}>PS</MenuItem>
-						</Select>
-					</FormControl>
+				<DialogTitle>Laporan Ada Acara</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Apabila terdapat kegiatan dan membutuhkan petugas kebersihan maka laporkan acara.
+					</DialogContentText>
 					<FormControl sx={{ mb: 1}} fullWidth>
-						<InputLabel id="demo-simple-select-label">Tempat</InputLabel>
-						<Select
-							labelId="demo-simple-select-label"
-							id="demo-simple-select"
-							value={gedung}
-							label="Gedung"
-							onChange={handleChange}
-						>
-							<MenuItem value={'LT2IT'}>LT2IT</MenuItem>
-							<MenuItem value={'LT1SPE'}>LT1SPE</MenuItem>
-							<MenuItem value={'LT3ELIN'}>LT3ELIN</MenuItem>
-						</Select>
-					</FormControl>
-					<LocalizationProvider dateAdapter={AdapterDayjs}>
-						<Stack spacing={3}>
-							<DateTimePicker
-							label="Date & Time"
-							value={value}
-							onChange={handleChangeTime}
-							renderInput={(params) => <TextField {...params} />}
-							/>
-						</Stack>
-					</LocalizationProvider>
-					<TextField
-						autoFocus
-						margin="dense"
-						id="judul"
-						label="Judul"
-						type="text"
-						fullWidth
-						variant="standard"
-					/>
-					<TextField
-						autoFocus
-						margin="dense"
-						id="isi"
-						label="Isi"
-						type="text"
-						fullWidth
-						variant="standard"
-					/>
-			</DialogContent>
-			<DialogActions>
-				<Button onClick={handleCloseAcara}>Cancel</Button>
-				<Button onClick={handleCloseAcara}>Kirim</Button>
-			</DialogActions>
-		</Dialog>
-	</div>
+							<InputLabel id="demo-simple-select-label">Gedung</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={gedung}
+								label="Gedung"
+								onChange={handleChange}
+							>
+								<MenuItem value={'D3'}>D3</MenuItem>
+								<MenuItem value={'D4'}>D4</MenuItem>
+								<MenuItem value={'PS'}>PS</MenuItem>
+							</Select>
+						</FormControl>
+						<FormControl sx={{ mb: 1}} fullWidth>
+							<InputLabel id="demo-simple-select-label">Tempat</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={gedung}
+								label="Gedung"
+								onChange={handleChange}
+							>
+								<MenuItem value={'LT2IT'}>LT2IT</MenuItem>
+								<MenuItem value={'LT1SPE'}>LT1SPE</MenuItem>
+								<MenuItem value={'LT3ELIN'}>LT3ELIN</MenuItem>
+							</Select>
+						</FormControl>
+						<LocalizationProvider dateAdapter={AdapterDayjs}>
+							<Stack spacing={3}>
+								<DateTimePicker
+								label="Date & Time"
+								value={value}
+								onChange={handleChangeTime}
+								renderInput={(params) => <TextField {...params} />}
+								/>
+							</Stack>
+						</LocalizationProvider>
+						<TextField
+							autoFocus
+							margin="dense"
+							id="judul"
+							label="Judul"
+							type="text"
+							fullWidth
+							variant="standard"
+						/>
+						<TextField
+							autoFocus
+							margin="dense"
+							id="isi"
+							label="Isi"
+							type="text"
+							fullWidth
+							variant="standard"
+						/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleCloseAcara}>Cancel</Button>
+					<Button onClick={handleCloseAcara}>Kirim</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
 	);
 };
 
