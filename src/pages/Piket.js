@@ -173,9 +173,12 @@ export default function Piket() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            <Button href="monitor" variant="contained">
+            {/* back Button */}
+            <Link to="/dashboard/monitor">
+            <Button variant="contained">
               Back Monitor
             </Button>
+            </Link>
           </Typography>
         </Stack>
 

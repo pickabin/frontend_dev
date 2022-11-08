@@ -59,13 +59,14 @@ export default function LoginForm() {
 
 
   const onSubmit = async () => {
-    navigate('/dashboard', { replace: true });
+    console.log("email",email);
+    console.log("password",password);
   };
 
   const { getToken } = AuthUser();
   console.log("token",getToken());
   if (getToken()) {
-    return <DashboardLayout />
+    window.location.href = '/dashboard/app';
   }
 
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Button, NoRightPaddingContainer } from '../../styles/Common.style';
 import { H1, Para } from '../../styles/Typography.style';
 import {
@@ -18,8 +19,10 @@ function Hero() {
 					<HeroContentWrapper>
 						<H1> <b>Pick A Bin</b></H1>
 						<Para>
-						Pick A Bin adalah aplikasi monitoring tempat sampah. Aplikasi ini memudahkan warga dan petugas dalam jadwal pengambilan sampah, konfirmasi pengambilan sampah dan memudahkan komunikasi antar user. </Para>
-						<Button>Get The App Now</Button>
+							Pick A Bin adalah aplikasi monitoring dan penjadwalan petugas kebersihan dan koordinator untuk meningkatkan efisiensi kerja petugas kebersihan.</Para>
+						<Button>
+							<Link to="https://play.google.com/store/apps/details?id=com.pickabin.pickabin_app">Get The App Now</Link>
+						</Button>
 					</HeroContentWrapper>
 				</HeroContent>
 				<HeroImage>

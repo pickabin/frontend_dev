@@ -5,14 +5,15 @@ import HomePage from '../home/Homepage';
 
 
 function LandingPage() {
-  
-  return (
-    <>
-      <Header />
-      <HomePage />
-      <Footer />
-    </>
-  );
-}
+
+    return (
+        <>
+            <Header />
+            <HomePage />
+            <Footer />
+        </>
+    );
+};
+
 
 export default LandingPage;
