@@ -45,7 +45,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            bash /home/mentoring/docker/deploy-frontend.sh
+            bash /home/pickabin/docker/deploy-frontend.sh
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
