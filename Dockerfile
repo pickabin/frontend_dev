@@ -7,7 +7,6 @@ RUN npm install -g npm@6.14.8
 RUN npm install
 
 COPY . .
-RUN mv .env.example .env
 
 RUN npm run build
 
