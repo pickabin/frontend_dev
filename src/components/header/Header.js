@@ -1,5 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { json, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from 'react-router-dom';
+import {
+  AppBar,
+  Tab,
+  Button,
+  Tabs,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+// Modal
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +19,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+
+// api
+
+
 // Input Camera
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -19,17 +34,17 @@ import axios from 'axios';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Alert } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 // Date & Time
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import dayjs from 'dayjs';
-import { te } from 'date-fns/locale';
 
 // firebase
 import { ref, uploadBytes, listAll,getDownloadURL } from "firebase/storage";
@@ -38,16 +53,20 @@ import { v4 } from 'uuid';
 // import API_KOORGEDUNG
 import { API_KOORGEDUNG, API_LAPORKOTORINSERT, API_LAPORACARAINSERT } from '../../api/api';
 
-import { Navigation, Nav, Ul, Li, Logo } from './Header.style';
 import logo from '../../images/logo.png';
-import { Button} from '../../styles/Common.style';
+import { Logo } from './Header.style';
+import DrawerComp from "./Drawer";
 import { storage } from '../../firebase';
 
 
-
-
 const Header = () => {
-	const [open, setOpen] = useState(false);
+  // const [value, setValue] = useState();
+  const theme = useTheme();
+  console.log(theme);
+  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+  console.log(isMatch);
+
+  const [open, setOpen] = useState(false);
 
 	const handleClick = () => {
 		setOpen(!open);
@@ -287,34 +306,37 @@ const Header = () => {
 	    
 	}
 
-
-
-	return (
-		<div>
-			<Navigation fullWidth>
-				<Nav>
-					<Logo>
-						<img src={logo} alt='logo' />
+  return (
+    <>
+      <AppBar sx={{ background: "#063970" }}>
+        <Toolbar>
+          <Logo>
+						<img   width={30} height={30} src={logo} alt='logo' />
 					</Logo>
-					<Ul className={open ? 'active' : 'navlinks'}>
-						<Li>
-							<Link  onClick={handleClickOpenKotor}>Lapor Kotor</Link>
-						</Li>
-						<Li>
-							<Link  onClick={handleClickOpenAcara}>Lapor Acara</Link>
-						</Li>
-						<Li>
-							<Link >Buku Panduan</Link>
-						</Li>
-					</Ul>
-					<Button>
-							<Link to='/login'>Login</Link>
-					</Button>
-				
-				</Nav>
-			</Navigation>
-
-			 {/* ModalLaporKotor */}
+            <Typography sx={{ fontSize: "2rem", paddingLeft: "0.3%" }}>
+              Pick A Bin
+            </Typography>
+          {isMatch ? (
+            <>
+              <DrawerComp />
+            </>
+          ) : (
+            <>
+              <Tabs
+                sx={{ marginLeft: "auto" }}
+                indicatorColor="secondary"
+                textColor="inherit"
+              >
+                <Link  onClick={handleClickOpenKotor}><Tab label="Lapor Kotor" /></Link>   
+                <Link  onClick={handleClickOpenAcara}><Tab label="Lapor Acara" /></Link>
+                <Link ><Tab label="Buku Panduan" /></Link>
+                
+              </Tabs>
+              <Button sx={{ marginLeft: "auto", background: "#97DBAE" }} variant="contained">
+                <Link to='/login'>Login</Link>
+              </Button>
+              
+              {/* ModalLaporKotor */}
 			<Dialog open={open} onClose={handleCloseKotor}>
 			     {
 					openAlert ? (
@@ -414,7 +436,7 @@ const Header = () => {
 				</DialogActions>
       		</Dialog>
 
-			{/* // Modal Lapor Acara */}
+                {/* // Modal Lapor Acara */}
 			<Dialog open={open2} onClose={handleCloseAcara}>
 			    {
 					openAlert ? (
@@ -511,8 +533,12 @@ const Header = () => {
 					<Button onClick={handleAcaraSubmit}>Kirim</Button>
 				</DialogActions>
 			</Dialog>
-		</div>
-	);
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
+    </> 
+  );
 };
 
 export default Header;
