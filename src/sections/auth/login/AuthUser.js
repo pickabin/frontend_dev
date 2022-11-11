@@ -33,7 +33,7 @@ export default function AuthUser() {
     };
 
     const http = axios.create({
-        baseURL: 'http://localhost:8000/api',
+        baseURL: 'https://azdevweb.online/api',
         headers: {
             'Content-Type': 'application/json',
         }

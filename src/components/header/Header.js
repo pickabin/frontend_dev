@@ -20,8 +20,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
-// api
-
 
 // Input Camera
 import IconButton from '@mui/material/IconButton';

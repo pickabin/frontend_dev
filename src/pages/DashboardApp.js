@@ -1,6 +1,14 @@
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
+import React, { useState } from 'react';
+
+
+// axios
+import axios from "axios";
+
+import { API_PETUGASDISIPLIN } from '../api/api';
+
 // components
 import Page from '../components/Page';
 // sections
@@ -14,6 +22,21 @@ import {
 
 export default function DashboardApp() {
   const theme = useTheme();
+
+  const [petugasDisiplin, setPetugasDisiplin] = useState([]);
+
+  React.useEffect(() => {
+    axios
+      .get(API_PETUGASDISIPLIN)
+      .then((res) => {
+        const petugasDisiplin = res.data;
+        setPetugasDisiplin(petugasDisiplin.data);
+        console.log("petugasDisiplin", petugasDisiplin);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Page title="Dashboard">

@@ -7,6 +7,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+
+// alert
+import Alert from '@mui/material/Alert';
+
 // components
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFCheckbox } from '../../../components/hook-form';
@@ -21,6 +25,7 @@ export default function LoginForm() {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [login, setLogin] = useState(false);
   
   
 
@@ -55,6 +60,10 @@ export default function LoginForm() {
       // console.log(res.data);
       setToken(res.data.user, res.data.access_token);
     })
+    .catch((err) => {
+      setLogin(true);
+      console.log(err);
+    });
   };
 
 
@@ -71,6 +80,13 @@ export default function LoginForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {
+        login ? (
+          <Alert sx={{ mb:3 }} severity="error">Email atau Password Salah</Alert>
+        ) : (
+          <></>
+        )
+      }
       <Stack spacing={3}>
         {/* buat form login */}
         <TextField
