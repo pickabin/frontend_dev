@@ -27,6 +27,7 @@ export const FooterLinks = styled.div`
 			max-width: 2rem;
 			margin-right: 1rem;
 		}
+		display: flex;
 	}
 	display: flex;
 	width: 60%;

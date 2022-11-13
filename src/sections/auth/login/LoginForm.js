@@ -59,6 +59,7 @@ export default function LoginForm() {
     }).then((res) => {
       // console.log(res.data);
       setToken(res.data.user, res.data.access_token);
+      // console.log("Data Login", res.data.user);
     })
     .catch((err) => {
       setLogin(true);

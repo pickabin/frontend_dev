@@ -5,6 +5,7 @@ const API_KOORGEDUNG = 'https://azdevweb.online/api/koorGedung/';
 const API_LAPORKOTORINSERT = 'https://azdevweb.online/api/laporKotor/store';
 const API_LAPORACARAINSERT = 'https://azdevweb.online/api/laporAcara/store';
 const API_PETUGASDISIPLIN = 'https://azdevweb.online/api/petugas/get/bestPetugas';
+const API_JUMLAHPETUGAS = 'https://azdevweb.online/api/petugas/get/getAllPetugas';
 
 export {
     API_ASPIRASI,
@@ -13,5 +14,6 @@ export {
     API_KOORGEDUNG, 
     API_LAPORKOTORINSERT, 
     API_LAPORACARAINSERT,
-    API_PETUGASDISIPLIN
+    API_PETUGASDISIPLIN,
+    API_JUMLAHPETUGAS
 };

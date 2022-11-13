@@ -307,6 +307,12 @@ const DrawerComp = () => {
         anchor="left"
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
+		// padding
+		PaperProps={{
+			style: {
+				padding: '20px',
+			},
+		}}
       >
         <List>
           {pagesKotor.map((index) => (
@@ -338,7 +344,7 @@ const DrawerComp = () => {
           ))}
           
         </List>
-        <Button sx={{ paddingLeft: "2rm", background: "#97DBAE" }} variant="contained">
+        <Button sx={{ paddingLeft: "2rem", background: "#97DBAE" }} variant="contained">
             <Link to='/login'>Login</Link>
           </Button>
       </Drawer>
