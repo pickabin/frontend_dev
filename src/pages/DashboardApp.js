@@ -41,7 +41,7 @@ export default function DashboardApp() {
         const petugasDisiplin = res.data;
        
         setPetugasDisiplin(petugasDisiplin.data);
-        console.log("petugasDisipli", petugasDisiplin);
+        console.log("petugasDisiplin", petugasDisiplin);
       })
       .catch((err) => {
         console.log(err);
@@ -77,7 +77,7 @@ export default function DashboardApp() {
               // console.log("item data", item);
               // console.log("total", jumlahPetugas[item]);
               return (
-                <Grid item xs={12} sm={6} md={3} key={item}>
+                <Grid item xs={12} sm={6} md={3} lg={4} key={item}>
                   <AppWidgetSummary
                     title={item}
                     value={jumlahPetugas[item]}
@@ -94,7 +94,7 @@ export default function DashboardApp() {
               );
             })
           }
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={3} lg={4}>
             <AppCurrentVisits
               title="Persentase yang piket hari ini"
               chartData={[
@@ -111,7 +111,7 @@ export default function DashboardApp() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          <Grid item xs={12}sm={6} md={3} lg={4}>
            {
              // jika petugas disiplin list tidak kosong maka tampilkan
               PETUGASDISIPLINLIST.length > 0 ? (
