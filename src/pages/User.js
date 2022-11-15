@@ -1,42 +1,46 @@
-import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
-import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { filter } from 'lodash';
+import React, { useState} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 // material
 import {
   Card,
   Table,
   Stack,
+  Link,
   Avatar,
-  Button,
-  Checkbox,
   TableRow,
   TableBody,
   TableCell,
   Container,
-  Typography,
   TableContainer,
   TablePagination,
 } from '@mui/material';
+
+import Typography from '@mui/material/Typography';
+
+import axios from 'axios';
+import {API_PETUGAS}  from '../api/api';
+
 // components
 import Page from '../components/Page';
-import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import { UserListHead} from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
+  { id: 'nama', label: 'Nama', alignRight: false },
+  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'alamat', label: 'Alamat', alignRight: false },
+  { id: 'notelp', label: 'No Telp', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -65,52 +69,52 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.nama.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
 export default function User() {
+  const [petugas, setPetugas] = useState([]);
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
+  const [orderBy, setOrderBy] = useState('nama');
 
-  const [orderBy, setOrderBy] = useState('name');
-
-  const [filterName, setFilterName] = useState('');
+  const [filterNama, setFilterNama] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  React.useEffect(() => {
+    axios.get(API_PETUGAS)
+      .then(res => {
+        const petugas = res.data;
+        setPetugas(petugas.data);
+        console.log("data petugas", petugas);
+      })
+  }, []);
+
+
+    const PETUGASLIST =  petugas.map((petugas) => {
+      return {
+        id: petugas.user.id,
+        nama: petugas.user.name,
+        email: petugas.user.email,
+        alamat: petugas.user.address,
+        photo : petugas.user.photo,
+        notelp: petugas.user.phone,
+      };
+    });
+
+    
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -122,30 +126,26 @@ export default function User() {
     setPage(0);
   };
 
-  const handleFilterByName = (event) => {
-    setFilterName(event.target.value);
+  const handleFilterByNama = (event) => {
+    setFilterNama(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - PETUGASLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(PETUGASLIST, getComparator(order, orderBy), filterNama);
 
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="User">
+    <Page title="Profile Petugas">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Petugas
           </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -155,46 +155,40 @@ export default function User() {
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={USERLIST.length}
-                  numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+                    const { id, nama, alamat, email, photo, notelp } = row;
 
                     return (
                       <TableRow
                         hover
                         key={id}
                         tabIndex={-1}
-                        role="checkbox"
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
+
+                        <TableCell component="th" scope="row" padding="checkbox">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
-                            <Typography variant="subtitle2" noWrap>
-                              {name}
+                            <Avatar alt={nama} src={photo} />
+                            <Typography variant="subtitle1" noWrap>
+                              {nama}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
                         <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
-                            {sentenceCase(status)}
-                          </Label>
+                          <Typography variant="subtitle1"> {email}</Typography>
                         </TableCell>
-
-                        <TableCell align="right">
-                          <UserMoreMenu />
+                        <TableCell align="left">
+                          <Typography variant="subtitle1"> {alamat} </Typography>
+                        </TableCell>
+                        <TableCell align="left">
+                          <Button>
+                            <Link variant="subtitle1" color="text.primary" href="https://wa.me/62{notelp}">
+                              <WhatsAppIcon fontSize="small">wa</WhatsAppIcon>
+                              {notelp}
+                            </Link>
+                          </Button>
                         </TableCell>
                       </TableRow>
                     );
@@ -210,7 +204,7 @@ export default function User() {
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
+                        <SearchNotFound searchQuery={filterNama} />
                       </TableCell>
                     </TableRow>
                   </TableBody>

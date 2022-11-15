@@ -5,16 +5,29 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, IconButton, InputAdornment } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+
+// alert
+import Alert from '@mui/material/Alert';
+
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
+import { FormProvider, RHFCheckbox } from '../../../components/hook-form';
+import AuthUser from './AuthUser';
+import DashboardLayout from '../../../layouts/dashboard';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { http,setToken } = AuthUser();
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [login, setLogin] = useState(false);
+  
+  
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,30 +52,70 @@ export default function LoginForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async () => {
-    navigate('/dashboard', { replace: true });
+  const handleLogin = () => {
+    http.post('/login', {
+      email,
+      password
+    }).then((res) => {
+      // console.log(res.data);
+      setToken(res.data.user, res.data.access_token);
+      // console.log("Data Login", res.data.user);
+    })
+    .catch((err) => {
+      setLogin(true);
+      console.log(err);
+    });
   };
+
+
+  const onSubmit = async () => {
+    console.log("email",email);
+    console.log("password",password);
+  };
+
+  const { getToken } = AuthUser();
+  console.log("token",getToken());
+  if (getToken()) {
+    window.location.href = '/dashboard/app';
+  }
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {
+        login ? (
+          <Alert sx={{ mb:3 }} severity="error">Email atau Password Salah</Alert>
+        ) : (
+          <></>
+        )
+      }
       <Stack spacing={3}>
-        <RHFTextField name="email" label="Email address" />
-
-        <RHFTextField
-          name="password"
-          label="Password"
+        {/* buat form login */}
+        <TextField
+          fullWidth
+          autoComplete="email"
+          type="email"
+          label="Email address"
+          {...methods.register('email')}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <TextField
+          fullWidth
+          autoComplete="current-password"
           type={showPassword ? 'text' : 'password'}
+          label="Password"
+          {...methods.register('password')}
+          onChange={e => setPassword(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                  <Iconify icon={showPassword ? 'bx:bxs-show' : 'bx:bxs-hide'} width={20} height={20} />
                 </IconButton>
               </InputAdornment>
             ),
           }}
         />
-      </Stack>
+    </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         <RHFCheckbox name="remember" label="Remember me" />
@@ -71,7 +124,7 @@ export default function LoginForm() {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} onClick={handleLogin}>
         Login
       </LoadingButton>
     </FormProvider>

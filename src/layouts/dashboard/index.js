@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet,useNavigate } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
+import AuthUser from '../../sections/auth/login/AuthUser';
+import Login from '../../pages/Login';
 
 
 // ----------------------------------------------------------------------
@@ -34,7 +36,15 @@ const MainStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function DashboardLayout() {
+  
   const [open, setOpen] = useState(false);
+
+  const { getToken } = AuthUser();
+  console.log("token",getToken());
+  if (!getToken()) {
+    // window.location.replace('http://localhost:3000/login');
+    return <Login />
+  }
 
   return (
     <RootStyle>

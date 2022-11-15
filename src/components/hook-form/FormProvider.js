@@ -10,7 +10,9 @@ FormProvider.propTypes = {
   onSubmit: PropTypes.func,
 };
 
+
 export default function FormProvider({ children, onSubmit, methods }) {
+  console.log("FormProvider", methods);
   return (
     <Form {...methods}>
       <form onSubmit={onSubmit}>{children}</form>
