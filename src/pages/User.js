@@ -1,24 +1,26 @@
-import { filter } from 'lodash';
-import React, { useState,useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-
+import { filter } from 'lodash';
+import React, { useState} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 // material
 import {
   Card,
   Table,
   Stack,
+  Link,
   Avatar,
-  Button,
-  Checkbox,
   TableRow,
   TableBody,
   TableCell,
   Container,
-  Typography,
   TableContainer,
   TablePagination,
 } from '@mui/material';
 
+import Typography from '@mui/material/Typography';
 
 import axios from 'axios';
 import {API_PETUGAS}  from '../api/api';
@@ -28,10 +30,9 @@ import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar} from '../sections/@dashboard/user';
+import { UserListHead} from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
-
 
 // ----------------------------------------------------------------------
 
@@ -80,8 +81,6 @@ export default function User() {
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('nama');
 
   const [filterNama, setFilterNama] = useState('');
@@ -118,30 +117,6 @@ export default function User() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = PETUGASLIST.map((n) => n.nama);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, nama) => {
-    const selectedIndex = selected.indexOf(nama);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, nama);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -168,13 +143,9 @@ export default function User() {
           <Typography variant="h4" gutterBottom>
             Petugas
           </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterNama={filterNama} onFilterNama={handleFilterByNama} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -184,38 +155,41 @@ export default function User() {
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={USERLIST.length}
-                  numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, nama, alamat, email, photo, notelp } = row;
-                    const isItemSelected = selected.indexOf(nama) !== -1;
 
                     return (
                       <TableRow
                         hover
                         key={id}
                         tabIndex={-1}
-                        alamat="checkbox"
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, nama)} />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
+
+                        <TableCell component="th" scope="row" padding="checkbox">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <Avatar alt={nama} src={photo} />
-                            <Typography variant="subtitle2" noWrap>
+                            <Typography variant="subtitle1" noWrap>
                               {nama}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{email}</TableCell>
-                        <TableCell align="left">{alamat}</TableCell>
-                        <TableCell align="left">{notelp}</TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle1"> {email}</Typography>
+                        </TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle1"> {alamat} </Typography>
+                        </TableCell>
+                        <TableCell align="left">
+                          <Button>
+                            <Link variant="subtitle1" color="text.primary" href="https://wa.me/62{notelp}">
+                              <WhatsAppIcon fontSize="small">wa</WhatsAppIcon>
+                              {notelp}
+                            </Link>
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

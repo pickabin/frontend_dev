@@ -7,7 +7,6 @@ import {
   Table,
   Stack,
   Avatar,
-  Checkbox,
   TableRow,
   TableBody,
   TableCell,
@@ -75,8 +74,6 @@ export default function Aspirasi() {
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('nama');
 
   const [filterNama, setFilterNama] = useState('');
@@ -110,30 +107,6 @@ export default function Aspirasi() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = ASPIRASILIST.map((n) => n.nama);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, nama) => {
-    const selectedIndex = selected.indexOf(nama);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, nama);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -163,8 +136,6 @@ export default function Aspirasi() {
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterNama={filterNama} onFilterNama={handleFilterByNama} />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -173,38 +144,34 @@ export default function Aspirasi() {
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={USERLIST.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
+                  onRequestSort={handleRequestSort}              />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, nama, tanggal, title, photo, isi } = row;
-                    const isItemSelected = selected.indexOf(nama) !== -1;
 
                     return (
                       <TableRow
                         hover
                         key={id}
                         tabIndex={-1}
-                        tanggal="checkbox"
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, nama)} />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
+                        <TableCell component="th" scope="row" padding="checkbox">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <Avatar alt={nama} src={photo} />
-                            <Typography variant="subtitle2" noWrap>
+                            <Typography variant="subtitle1" noWrap>
                               {nama}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{title}</TableCell>
-                        <TableCell align="left">{tanggal}</TableCell>
-                        <TableCell align="left">{isi}</TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle1" noWrap>{title}</Typography>
+                        </TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle1" noWrap> {tanggal} </Typography>
+                        </TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle1" noWrap>{isi}</Typography>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

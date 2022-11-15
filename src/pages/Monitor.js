@@ -179,30 +179,27 @@ export default function Monitor() {
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id, nama, tempat, gedung, photo } = row;
-                    const isItemSelected = selected.indexOf(nama) !== -1;
 
                     return (
                       <TableRow
                         hover
                         key={id}
                         tabIndex={-1}
-                        tempat="checkbox"
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, nama)} />
-                        </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
+                        <TableCell component="th" scope="row" padding="checkbox">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             <Avatar alt={nama} src={photo} />
-                            <Typography variant="subtitle2" noWrap>
+                            <Typography variant="subtitle1" noWrap>
                               {nama}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{gedung}</TableCell>
-                        <TableCell align="left">{tempat}</TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle1">{gedung}</Typography>
+                        </TableCell>
+                        <TableCell align="left">
+                          <Typography variant="subtitle1">{tempat}</Typography>
+                        </TableCell>
                         <TableCell align="left">
                           <Link to='piket' state={{ userid: id }} >
                             <Button variant="contained">

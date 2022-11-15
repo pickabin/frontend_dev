@@ -72,6 +72,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
         <Logo />
+        
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
@@ -79,10 +80,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           <AccountStyle>
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+              <Typography variant="h4" sx={{ color: 'text.primary' }}>
                 {user.name}
               </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography variant="h5" sx={{ color: 'text.secondary' }}>
                 {account.role}
               </Typography>
             </Box>
