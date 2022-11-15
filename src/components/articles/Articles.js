@@ -3,12 +3,12 @@ import { ArticleWrapper, ArticleGrid, ArticleCard, ArticleCardContent } from './
 import { Container } from '../../styles/Common.style';
 import Karina from '../../images/karina.jpg';
 import PakGrez from '../../images/pakgrez.jpg';
-import MasIrul from '../../images/masirul.jpg';
+import PetugasD4 from '../../images/petugasD4.jpg';
 import BuSiti from '../../images/busiti.jpg';
 
 import { H2, H4, Para } from '../../styles/Typography.style';
 
-const Articles = () => {
+function Articles() {
   return (
     <div>
       <Container>
@@ -42,15 +42,14 @@ const Articles = () => {
               </ArticleCardContent>
             </ArticleCard>
             <ArticleCard>
-              <img src={MasIrul} alt="" />
+              <img src={PetugasD4} alt="" />
               <ArticleCardContent>
                 <H4>
-                  <b>Irul - Petugas Kebersihan</b>
+                  <b>Petugas Kebersihan D4 PENS</b>
                 </H4>
 
                 <Para>
-                  "Dengan menggunakan Aplikasi ini bisa mempermudah pekerjaan saya, karena saya jadi tau mana sampah
-                  yang sudah diambil dan mana sampah yang belum diambil"
+                  "Aplikasi simple dan mudah digunakan meskipun masih baru dalam penggunaannya sehingga perlu dibiasakan lagi untuk bisa menggunakan aplikasi ini."
                 </Para>
               </ArticleCardContent>
             </ArticleCard>

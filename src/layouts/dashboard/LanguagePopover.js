@@ -19,9 +19,9 @@ const LANGS = [
     icon: '/static/icons/ic_flag_de.svg',
   },
   {
-    value: 'fr',
-    label: 'French',
-    icon: '/static/icons/ic_flag_fr.svg',
+    value: 'id',
+    label: 'Indonesia',
+    icon: '/static/icons/ic_flag_id.svg',
   },
 ];
 
@@ -53,7 +53,7 @@ export default function LanguagePopover() {
           }),
         }}
       >
-        <img src={LANGS[0].icon} alt={LANGS[0].label} />
+        <img src={LANGS[2].icon} alt={LANGS[2].label} />
       </IconButton>
 
       <MenuPopover

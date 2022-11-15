@@ -5,7 +5,7 @@ import Hero from '../../components/hero/Hero';
 import { HomeContainer } from './Home.style';
 
 
-const HomePage = () => {
+function HomePage () {
    return (
 	<>
 	   <HomeContainer>

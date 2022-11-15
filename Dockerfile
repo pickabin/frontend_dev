@@ -8,6 +8,9 @@ RUN npm install
 
 COPY . .
 
+# RUN mv .env.example .env
+
+
 RUN npm run build
 
 FROM nginx:alpine
