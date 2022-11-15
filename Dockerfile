@@ -4,7 +4,7 @@ WORKDIR '/app'
 COPY package.json .
 COPY package-lock.json .
 RUN npm install -g npm@6.14.8
-RUN npm install --force
+RUN npm install
 
 COPY . .
 # RUN mv .env.example .env
