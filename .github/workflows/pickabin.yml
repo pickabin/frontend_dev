@@ -46,7 +46,3 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             bash /home/pickabin/docker/deploy-frontend.sh
-<<<<<<< HEAD
-
-=======
->>>>>>> 4d90fd23728c68048304ec296c38d944f2660eaf
