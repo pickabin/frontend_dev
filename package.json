@@ -43,6 +43,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@faker-js/faker": "^7.3.0",
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/react-fontawesome": "github:fortawesome/react-fontawesome",
     "@hookform/resolvers": "^2.9.3",
     "@iconify/react": "^3.2.2",
