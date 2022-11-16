@@ -111,7 +111,7 @@ export default function DashboardApp() {
             />
           </Grid>
 
-          <Grid item xs={12}sm={6} md={3} lg={4}>
+          <Grid item xs={12}sm={6} md={3} lg={8}>
            {
              // jika petugas disiplin list tidak kosong maka tampilkan
               PETUGASDISIPLINLIST.length > 0 ? (

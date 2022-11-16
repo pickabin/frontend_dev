@@ -156,10 +156,6 @@ const Header = () => {
     setOpen(false);
   };
 
-  const handleClickOpenBukuPanduan = () => {
-	
-  };
-
   // const handleChangeKotor = (event, SelectChangeEvent) => {
   // 	setGedung(event.target.value);
   // };
@@ -221,12 +217,7 @@ const Header = () => {
       judul: dataAcara.judul,
       deskripsi: dataAcara.deskripsi,
     };
-    // console.log("data code",  data.gedung);
-    // console.log("data clean area",  data.tempat);
-    // console.log("data tanggal",  data.tanggalWaktu);
-    // console.log("data judul",  data.judul);
-    // console.log("data deskripsi",  data.deskripsi);
-    // insert data api with axios
+
     clientLaporAcara
       .post('', {
         code: data.gedung,
@@ -249,6 +240,10 @@ const Header = () => {
         console.log(error);
       });
   };
+
+  const handleBukuPanduan  = ()  =>{
+    
+  }
 
   const handleKotorSubmit = (e) => {
     e.preventDefault();
@@ -297,31 +292,21 @@ const Header = () => {
             </>
           ) : (
             <>
-              {/* <Tabs
-                sx={{ marginLeft: "auto" }}
-                indicatorColor="secondary"
-                textColor="inherit"
-				value={value}
-              >
-                <Link  onClick={handleClickOpenKotor}><Box sx={{ fontSize: 14, fontWeight: 'bold', lineheight: 12  }}>Lapor Kotor</Box></Link>   
-                <Link  onClick={handleClickOpenAcara}><Tab label="Lapor Acara"  /></Link>
-                <Link ><Tab label="Buku Panduan"  /></Link>
-                
-              </Tabs> */}
+
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', marginLeft: 30 } }}>
                 {pages.map((page) => (
                   // menu navbar font size 16px
 				  <Link key={page} onClick={
 					// es lint disable
 					// eslint-disable-next-line no-nested-ternary
-					page === 'Lapor Kotor' ? handleClickOpenKotor : page === 'Lapor Acara' ? handleClickOpenAcara : null
-				  } underline="none" sx={{  fontWeight: 'bold', lineheight: 12 }}>
-					<Button sx={{ fontSize: 14, color: 'white' }}>{page}</Button>
-				</Link>
+            page === 'Lapor Kotor' ? handleClickOpenKotor : page === 'Lapor Acara' ? handleClickOpenAcara : null
+            } underline="none" sx={{  fontWeight: 'bold', lineheight: 12 }}>
+            <Button sx={{ fontSize: 14, color: 'white' }}>{page}</Button>
+				  </Link>
                 ))}
               </Box>
               <Button sx={{ marginLeft: 'auto', background: '#97DBAE', color: 'white' }} variant="contained">
-                <Link to="/login">Login</Link>
+                <Link style={{ color: 'white' }} to="/login">Login</Link>
               </Button>
 
               {/* ModalLaporKotor */}

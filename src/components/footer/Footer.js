@@ -27,16 +27,20 @@ const Footer = () => {
 							</div>
 						</div>
 						<div className='link'>
-							<Link to='/about'>About</Link>
-							<Link to='/Contact'>Contact</Link> <Link to='/blog'>Blog</Link>
+							<Link >Laporan</Link>
+							<Link >Kebersihan</Link> 
+							<Link >Petugas</Link>
 						</div>
 						<div className='link'>
-							<Link to='/Support'>Support</Link>
-							<Link to='/Help'>Help</Link> <Link to='/contact'>Contact</Link>
+							<Link >Lingkungan</Link>
+							<Link >Pengaduan</Link> 
+							<Link >Kotor</Link>
 						</div>
 					</FooterLinks>
 					<FooterButton>
-						<Button>Get The App Now</Button>
+						<Button>
+						<a href="https://play.google.com/store/apps/details?id=com.pickabin.pickabin_app" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>Get App Now</a>
+						</Button>
 					</FooterButton>{' '}
 				</div>
 			</Container>

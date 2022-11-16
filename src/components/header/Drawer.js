@@ -107,7 +107,7 @@ const DrawerComp = () => {
 	const [disableButton, setDisableButton] = useState(true);
 
 	// open drawer
-	const [openDrawer, setOpenDrawer] = useState(true);
+	const [openDrawer, setOpenDrawer] = useState(false);
 
 	// image
 	const [image, setImage] = useState(null);
@@ -337,7 +337,7 @@ const DrawerComp = () => {
             <ListItemButton key={index}>
               <ListItemIcon>
                 <ListItemText>
-                    <Link >Buku Panduan</Link> 
+					<a href="https://drive.google.com/drive/folders/1BSNwdWtonjwJ6e57CwrU45K1DddafBIs?usp=share_link" target="_blank" rel="noopener noreferrer">Buku Panduan</a>
                 </ListItemText>
               </ListItemIcon>
             </ListItemButton>
