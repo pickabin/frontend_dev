@@ -21,7 +21,7 @@ function Hero() {
 						<Para>
 							Pick A Bin adalah aplikasi monitoring dan penjadwalan petugas kebersihan dan koordinator untuk meningkatkan efisiensi kerja petugas kebersihan.</Para>
 						<Button>
-							<Link to="https://play.google.com/store/apps/details?id=com.pickabin.pickabin_app" style={{ color: 'white' }}>Get The App Now</Link>
+							<a href="https://play.google.com/store/apps/details?id=com.pickabin.pickabin_app" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>Get App Now</a>
 						</Button>
 					</HeroContentWrapper>
 				</HeroContent>
