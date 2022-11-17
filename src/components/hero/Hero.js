@@ -26,7 +26,7 @@ function Hero() {
 					</HeroContentWrapper>
 				</HeroContent>
 				<HeroImage>
-					<img src={HeroImg} alt='hero' style={{ marginTop: 230 }}/>
+					<img src={HeroImg} alt='hero' sm={{mr:20}} style={{ marginTop: 230 }} />
 				</HeroImage>
 			</HeroWrapper>
 		</NoRightPaddingContainer>

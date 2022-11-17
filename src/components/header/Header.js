@@ -274,9 +274,12 @@ const Header = () => {
         // tampilkan alert mui
         setOpenAlert(true);
         // setelah 3 detik dialog akan tertutup
+        window.location.reload(false);
         setTimeout(() => {
+         
           setOpen(false);
-        }, 3000);
+         
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
