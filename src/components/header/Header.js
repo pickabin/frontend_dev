@@ -113,7 +113,7 @@ const Header = () => {
   const [imageList, setImageList] = useState([]);
   const [imageURL, setImageURL] = useState('');
 
-  // get data api
+  // get data api and allow CORS
   React.useEffect(() => {
     axios
       .get(API_KOORGEDUNG)
@@ -242,7 +242,8 @@ const Header = () => {
         setOpenAlert(true);
         // setelah 3 detik dialog akan tertutup
         setTimeout(() => {
-          setOpenAcara(false);
+          // refresh page
+          window.location.reload();
         }, 3000);
       })
       .catch((error) => {
@@ -279,7 +280,9 @@ const Header = () => {
          
           setOpen(false);
          
-        }, 1000);
+          // refresh page
+          window.location.reload();
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
