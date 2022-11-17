@@ -242,7 +242,8 @@ const Header = () => {
         setOpenAlert(true);
         // setelah 3 detik dialog akan tertutup
         setTimeout(() => {
-          setOpenAcara(false);
+          // refresh page
+          window.location.reload();
         }, 3000);
       })
       .catch((error) => {
@@ -275,7 +276,8 @@ const Header = () => {
         setOpenAlert(true);
         // setelah 3 detik dialog akan tertutup
         setTimeout(() => {
-          setOpen(false);
+          // refresh page
+          window.location.reload();
         }, 3000);
       })
       .catch((error) => {
