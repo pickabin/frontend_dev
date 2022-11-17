@@ -328,7 +328,11 @@ const Header = () => {
                   </Alert>
                 ) : null}
 
-                <DialogTitle>Laporan Lingkungan Kotor</DialogTitle>
+                <DialogTitle>
+                  <Typography variant="h4">
+                    Laporan Lingkungan Kotor
+                  </Typography>
+                </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
                     Apabila menemukan daerah yang kotor, silahkan laporkan dan unggah bukti tempat tersebut.
@@ -402,8 +406,16 @@ const Header = () => {
                   )}
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleCloseKotor}>Cancel</Button>
-                  <Button onClick={handleKotorSubmit}>Kirim</Button>
+                  <Button onClick={handleCloseKotor}>
+                    <Typography variant="subtitle1">
+                        Cancel
+                    </Typography>
+                  </Button>
+                  <Button onClick={handleKotorSubmit}>
+                    <Typography variant="subtitle1">
+                      Kirim
+                    </Typography>
+                  </Button>
                 </DialogActions>
               </Dialog>
 
@@ -414,7 +426,11 @@ const Header = () => {
                     Data Berhasil Di Simpan
                   </Alert>
                 ) : null}
-                <DialogTitle>Laporan Ada Acara</DialogTitle>
+                <DialogTitle>
+                  <Typography variant="h4">
+                    Laporan Ada Acara
+                  </Typography>
+                </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
                     Apabila terdapat kegiatan dan membutuhkan petugas kebersihan maka laporkan acara.
@@ -497,8 +513,16 @@ const Header = () => {
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleCloseAcara}>Cancel</Button>
-                  <Button onClick={handleAcaraSubmit}>Kirim</Button>
+                  <Button onClick={handleCloseAcara}>
+                    <Typography variant="subtitle1">
+                        Cancel
+                    </Typography>
+                  </Button>
+                  <Button onClick={handleAcaraSubmit}>
+                    <Typography variant="subtitle1">
+                      Kirim
+                    </Typography>
+                  </Button>
                 </DialogActions>
               </Dialog>
               

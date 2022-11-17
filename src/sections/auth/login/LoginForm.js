@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 // alert
@@ -124,8 +124,10 @@ export default function LoginForm() {
         </Link>
       </Stack>
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} onClick={handleLogin}>
-        Login
+      <LoadingButton fullWidth type="submit" variant="contained" loading={isSubmitting} onClick={handleLogin}>
+        <Typography variant="h4" noWrap>
+          LOGIN
+        </Typography>
       </LoadingButton>
     </FormProvider>
   );
