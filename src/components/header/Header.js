@@ -85,7 +85,10 @@ const Header = () => {
   const [openAlert, setOpenAlert] = useState(false);
 
   // Lapor acara
-  const [open2, setOpen2] = useState(false);
+  const [openAcara, setOpenAcara] = useState(false);
+
+  // Panduan
+  const [openPanduan, setOpenPanduan] = React.useState(false);
 
   // set gedung lapor kotor
   const [gedungKotor, setGedungKotor] = useState('');
@@ -155,17 +158,23 @@ const Header = () => {
   const handleCloseKotor = () => {
     setOpen(false);
   };
-
-  // const handleChangeKotor = (event, SelectChangeEvent) => {
-  // 	setGedung(event.target.value);
-  // };
+  
 
   // Lapor Acara
   const handleCloseAcara = () => {
-    setOpen2(false);
+    setOpenAcara(false);
   };
   const handleClickOpenAcara = () => {
-    setOpen2(true);
+    setOpenAcara(true);
+  };
+
+  // Panduan
+  const handleClickOpenPanduan = () => {
+    setOpenPanduan(true);
+  };
+
+  const handleClosePanduan = () => {
+    setOpenPanduan(false);
   };
 
   const handleChange = (event, SelectChangeEvent) => {};
@@ -233,17 +242,13 @@ const Header = () => {
         setOpenAlert(true);
         // setelah 3 detik dialog akan tertutup
         setTimeout(() => {
-          setOpen2(false);
+          setOpenAcara(false);
         }, 3000);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  const handleBukuPanduan  = ()  =>{
-    
-  }
 
   const handleKotorSubmit = (e) => {
     e.preventDefault();
@@ -296,17 +301,17 @@ const Header = () => {
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', marginLeft: 30 } }}>
                 {pages.map((page) => (
                   // menu navbar font size 16px
-				  <Link key={page} onClick={
-					// es lint disable
-					// eslint-disable-next-line no-nested-ternary
-            page === 'Lapor Kotor' ? handleClickOpenKotor : page === 'Lapor Acara' ? handleClickOpenAcara : null
-            } underline="none" sx={{  fontWeight: 'bold', lineheight: 12 }}>
-            <Button sx={{ fontSize: 14, color: 'white' }}>{page}</Button>
-				  </Link>
+                <Link key={page} onClick={
+                // es lint disable
+                // eslint-disable-next-line no-nested-ternary
+                  page === 'Lapor Kotor' ? handleClickOpenKotor : page === 'Lapor Acara' ? handleClickOpenAcara : handleClickOpenPanduan
+                  } underline="none" sx={{  fontWeight: 'bold', lineheight: 12 }}>
+                  <Button sx={{ fontSize: 14, color: 'white' }}>{page}</Button>
+                </Link>
                 ))}
               </Box>
-              <Button sx={{ marginLeft: 'auto', background: '#97DBAE', color: 'white' }} variant="contained">
-                <Link style={{ color: 'white' }} to="/login">Login</Link>
+              <Button sx={{ marginLeft: 'auto', background: '#47b882'}} variant="contained">
+                <Link style={{ color: 'white' }} to="/login">Login</Link> 
               </Button>
 
               {/* ModalLaporKotor */}
@@ -397,7 +402,7 @@ const Header = () => {
               </Dialog>
 
               {/* // Modal Lapor Acara */}
-              <Dialog open={open2} onClose={handleCloseAcara}>
+              <Dialog open={openAcara} onClose={handleCloseAcara}>
                 {openAlert ? (
                   <Alert severity="success" onClose={() => setOpenAlert(false)}>
                     Data Berhasil Di Simpan
@@ -488,6 +493,37 @@ const Header = () => {
                 <DialogActions>
                   <Button onClick={handleCloseAcara}>Cancel</Button>
                   <Button onClick={handleAcaraSubmit}>Kirim</Button>
+                </DialogActions>
+              </Dialog>
+              
+              {/* Panduan */}
+              <Dialog
+                open={openPanduan}
+                onClose={handleClosePanduan}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Buku panduan"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description" >
+                    <Typography variant="h6">
+                     Anda Yakin berpindah halaman untuk membaca buku panduan ? 
+                    </Typography>
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClosePanduan}>
+                    <Typography variant="h6">
+                      Tidak
+                    </Typography>
+                  </Button>
+                  <Button onClick={handleClosePanduan} sx={{ marginLeft: 'auto', background: '#47b882', color: 'primary' }} variant="contained">
+                    <Typography variant="h6">
+                      <a style={{ color: 'white' }} href="https://drive.google.com/drive/folders/1BSNwdWtonjwJ6e57CwrU45K1DddafBIs?usp=share_link" target="_blank" rel="noopener noreferrer">Ya</a>
+                    </Typography>
+                  </Button>
                 </DialogActions>
               </Dialog>
             </>
