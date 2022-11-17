@@ -110,7 +110,7 @@ const Header = () => {
   const [imageList, setImageList] = useState([]);
   const [imageURL, setImageURL] = useState('');
 
-  // get data api
+  // get data api and allow CORS
   React.useEffect(() => {
     axios
       .get(API_KOORGEDUNG)

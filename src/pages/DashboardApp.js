@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 // axios
 import axios from "axios";
 
-import { API_PETUGASDISIPLIN, API_JUMLAHPETUGAS } from '../api/api';
+import { API_PETUGASDISIPLIN, API_JUMLAHPETUGAS, API_STATUSPETUGAS } from '../api/api';
 
 // components
 import Page from '../components/Page';
@@ -26,6 +26,7 @@ export default function DashboardApp() {
   const [petugasDisiplin, setPetugasDisiplin] = useState([]);
   const [namaPetugas, setNamaPetugas] = useState([]);
   const [jumlahPetugas, setJumlahPetugas] = useState([]);
+  const [jumlahPiket, setJumlahPiket] = useState([]);
 
   React.useEffect(() => {
     axios.get(API_JUMLAHPETUGAS).then((res) => {
@@ -35,11 +36,17 @@ export default function DashboardApp() {
       console.log(error);
     });
 
+    axios.get(API_STATUSPETUGAS).then((res) => {
+      const jumlahPiket = res.data;
+      setJumlahPiket(jumlahPiket.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  
     axios
       .get(API_PETUGASDISIPLIN)
       .then((res) => {
         const petugasDisiplin = res.data;
-       
         setPetugasDisiplin(petugasDisiplin.data);
         console.log("petugasDisiplin", petugasDisiplin);
       })
@@ -60,8 +67,13 @@ export default function DashboardApp() {
     return { nama: item};
   })
 
-
-
+   // ambil object done
+   const DATAPIKET_TOTAL = Object.keys(jumlahPiket).map((item) => {
+    // tampilkan data nama object
+    console.log("item data done", Object.keys(jumlahPiket[item]));
+    console.log("total done", jumlahPiket[item]);
+    return { total: jumlahPiket[item]};
+   })
 
 
   return (
@@ -95,20 +107,26 @@ export default function DashboardApp() {
             })
           }
           <Grid item xs={12} sm={6} md={3} lg={4}>
-            <AppCurrentVisits
-              title="Persentase yang piket hari ini"
-              chartData={[
-                { label: 'D3', value: 4344 },
-                { label: 'D4', value: 5435 },
-                { label: 'Paska Sarjana', value: 1443 },
-              ]}
-              chartColors={[
-                theme.palette.primary.main,
-                theme.palette.chart.red[0],
-                theme.palette.chart.violet[0],
-                theme.palette.chart.yellow[0],
-              ]}
-            />
+            {
+              DATAPIKET_TOTAL.length > 0 ? (
+                <AppCurrentVisits
+                title="Persentase yang piket hari ini"
+                chartData={[
+                  { label: "D4PENS", value: DATAPIKET_TOTAL[0].total.D4PENS},
+                  { label: "PSPENS", value: DATAPIKET_TOTAL[0].total.PSPENS},
+                  { label: "D3PENS", value: DATAPIKET_TOTAL[0].total.D3PENS},
+                ]}
+                chartColors={[
+                  theme.palette.primary.main,
+                  theme.palette.chart.red[0],
+                  theme.palette.chart.violet[0],
+                  theme.palette.chart.yellow[0],
+                ]}
+              />
+              ) : (
+                <div>Loading...</div>
+              )
+            }
           </Grid>
 
           <Grid item xs={12}sm={6} md={3} lg={4}>
