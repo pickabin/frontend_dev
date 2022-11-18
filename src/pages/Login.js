@@ -97,18 +97,12 @@ export default function Login() {
               Sign to Admin Page
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Masukkan Akun</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }} variant="h6">
+              Masukkan Akun
+            </Typography>
 
             <LoginForm />
-
-            {!smUp && (
-              <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don't have an account?{' '}
-                <Link variant="subtitle2" component={RouterLink} to="/register">
-                  Get started
-                </Link>
-              </Typography>
-            )}
+            
           </ContentStyle>
         </Container>
       </RootStyle>
