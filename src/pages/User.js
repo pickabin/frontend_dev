@@ -23,6 +23,7 @@ import {
 import Typography from '@mui/material/Typography';
 
 import axios from 'axios';
+import { margin } from '@mui/system';
 import {API_PETUGAS}  from '../api/api';
 
 // components
@@ -33,6 +34,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead} from '../sections/@dashboard/user';
 // mock
 import USERLIST from '../_mock/user';
+
 
 // ----------------------------------------------------------------------
 
@@ -184,10 +186,18 @@ export default function User() {
                         </TableCell>
                         <TableCell align="left">
                           <Button>
-                            <Link variant="subtitle1" color="text.primary" href="https://wa.me/62{notelp}">
-                              <WhatsAppIcon fontSize="small">wa</WhatsAppIcon>
-                              {notelp}
-                            </Link>
+                            {
+                              // jika notelp tidak nul maka arahkan ke halaman whatsapp sesuai no telp
+                              // CONVERT 08123456789 menjadi 628123456789
+                              notelp != null ? (
+                                <Link variant="subtitle1" href={`https://wa.me/${notelp.replace(/^0/, '62')}`} target="_blank">
+                                  <Iconify icon="bx:bxl-whatsapp" width={24} height={24} />
+                                {notelp}
+                              </Link>
+                              ) : (
+                                <Typography variant="subtitle1"> - </Typography>
+                              )
+                            }
                           </Button>
                         </TableCell>
                       </TableRow>

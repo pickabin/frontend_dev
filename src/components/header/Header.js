@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Tab, Button, Tabs, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { sizing, typography,spacing } from '@mui/system';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // Modal
 import DialogTitle from '@mui/material/DialogTitle';
@@ -41,7 +42,7 @@ import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 
 // import API_KOORGEDUNG
-import { API_KOORGEDUNG, API_LAPORKOTORINSERT, API_LAPORACARAINSERT } from '../../api/api';
+import { API_KOORGEDUNG, API_LAPORKOTORINSERT, API_LAPORACARAINSERT,API_PETUGAS } from '../../api/api';
 
 import logo from '../../images/logo2.png';
 import { Logo } from './Header.style';
@@ -105,6 +106,9 @@ const Header = () => {
   // gedung list
   const [gedungList, setGedungList] = useState([]);
 
+  // tempat list
+  const [tempatList, setTempatList] = useState([]);
+
   // disable button
   const [disableButton, setDisableButton] = useState(true);
 
@@ -115,6 +119,15 @@ const Header = () => {
 
   // get data api and allow CORS
   React.useEffect(() => {
+    axios
+      .get(API_PETUGAS).then((res) => {
+        const tempat = res.data;
+        setTempatList(tempat.data);
+        console.log(tempatList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     axios
       .get(API_KOORGEDUNG)
       .then((response) => {
@@ -193,6 +206,7 @@ const Header = () => {
       alert('Please select an image to upload first');
       return;
     }
+    
     // jika image tidak kosong
     const imageRef = ref(storage, `laporan/${image.name + v4()}`);
     uploadBytes(imageRef, image).then((snapshot) => {
@@ -210,10 +224,10 @@ const Header = () => {
     return gedungList.findIndex((item2) => item2.code === item.code) === index && item.code !== null;
   });
 
-  const filterGedungArea = gedungList.filter((item, index) => {
+  const filterGedungArea = tempatList.filter((item, index) => {
     // jika ada value clean_area yang sama maka akan di filter dan hanya akan di tampilkan 1
     // dan jika value null tidak akan di tampilkan
-    return gedungList.findIndex((item2) => item2.clean_area === item.clean_area) === index && item.clean_area !== null;
+    return tempatList.findIndex((item2) => item2.clean_area === item.clean_area) === index && item.clean_area !== null;
   });
 
 
