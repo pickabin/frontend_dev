@@ -82,6 +82,9 @@ const Header = () => {
     photo: '',
   });
 
+  // loading
+  const [loading, setLoading] = useState(false);
+
   // alert
   const [openAlert, setOpenAlert] = useState(false);
 
@@ -200,6 +203,7 @@ const Header = () => {
   // upload file
 
   const uploadImage = () => {
+    setLoading(true);
     setDisableButton(false);
     // jika image kosong dan nama file sama
     if (image === null) {
@@ -214,6 +218,7 @@ const Header = () => {
         setImageURL(url);
         console.log('File available at', imageURL);
       });
+      setLoading(false);
     });
   };
 
@@ -405,7 +410,8 @@ const Header = () => {
                       <input hidden accept="image/*" type="file" onChange={(e) => setImage(e.target.files[0])} />
                       {
                         // tampilkan gambar dari imageURL state
-                        imageURL ? <img src={imageURL} alt="gambar" width="100%" /> : <PhotoCamera />
+                        // eslint-disable-next-line no-nested-ternary
+                       loading ? <CircularProgress color="success" /> : imageURL ? <img src={imageURL} alt="gambar" width="100%" /> : <PhotoCamera />
                       }
                     </IconButton>
                   </Box>

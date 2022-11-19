@@ -141,8 +141,8 @@ export default function DashboardApp() {
                   {label: PETUGASDISIPLINLIST[0].nama, value: PETUGASDISIPLINLIST[0].total},
                   {label: PETUGASDISIPLINLIST[1].nama, value: PETUGASDISIPLINLIST[1].total},
                   {label: PETUGASDISIPLINLIST[2].nama, value: PETUGASDISIPLINLIST[2].total},
-                  {label: PETUGASDISIPLINLIST[3].nama, value: PETUGASDISIPLINLIST[3].total},
-                  {label: PETUGASDISIPLINLIST[4].nama, value: PETUGASDISIPLINLIST[4].total},
+                  // {label: PETUGASDISIPLINLIST[3].nama, value: PETUGASDISIPLINLIST[3].total},
+                  // {label: PETUGASDISIPLINLIST[4].nama, value: PETUGASDISIPLINLIST[4].total},
                  ]
                 }
               />
